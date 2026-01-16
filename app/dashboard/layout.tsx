@@ -1,21 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react"
-useEffect(() => {
-  const updateFromHash = () => {
-    const hash = window.location.hash.replace("#", "")
-    if (hash) {
-      setActive(hash)
-    }
-  }
-
-  updateFromHash()
-  window.addEventListener("hashchange", updateFromHash)
-
-  return () => {
-    window.removeEventListener("hashchange", updateFromHash)
-  }
-}, [])
 
 export default function DashboardLayout({
   children,
@@ -24,6 +9,23 @@ export default function DashboardLayout({
 }) {
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState("payments")
+
+  // 🔁 Sync sidebar highlight with URL hash
+  useEffect(() => {
+    const updateFromHash = () => {
+      const hash = window.location.hash.replace("#", "")
+      if (hash) {
+        setActive(hash)
+      }
+    }
+
+    updateFromHash()
+    window.addEventListener("hashchange", updateFromHash)
+
+    return () => {
+      window.removeEventListener("hashchange", updateFromHash)
+    }
+  }, [])
 
   return (
     <div className="min-h-screen bg-slate-50 overflow-x-hidden">
@@ -73,14 +75,10 @@ export default function DashboardLayout({
             <a
               key={item.id}
               href={`#${item.id}`}
-            onClick={() => {
-  setActive(item.id)
-  document
-    .querySelector(`[data-state][value="${item.id}"]`)
-    ?.scrollIntoView({ behavior: "smooth" })
-  setOpen(false)
-}}
-
+              onClick={() => {
+                setActive(item.id)
+                setOpen(false)
+              }}
               className={`
                 block rounded px-3 py-2 text-sm
                 ${active === item.id
