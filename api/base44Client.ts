@@ -1,16 +1,16 @@
 export const base44 = {
   entities: {
     DuesSetting: {
-      list: async () => [],
+      list: async (_order?: string, _limit?: number) => [],
       create: async (data: any) => data,
       update: async (_id: any, data: any) => data,
     },
     Payment: {
-      filter: async () => [],
+      filter: async (_filter?: any, _order?: string, _limit?: number) => [],
       update: async (_id: any, data: any) => data,
     },
     Resident: {
-      list: async () => [],
+      list: async (_order?: string, _limit?: number) => [],
     },
     Announcement: {
       create: async (data: any) => data,
