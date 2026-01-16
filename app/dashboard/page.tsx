@@ -44,48 +44,60 @@ export default function DashboardPage() {
           </TabsTrigger>
         </TabsList>
 
+        {/* PAYMENTS */}
         <TabsContent value="payments">
-          <Card>
-            <CardHeader>
-              <CardTitle>Payments</CardTitle>
-            </CardHeader>
-            <CardContent>
-              Payments content placeholder
-            </CardContent>
-          </Card>
+          <div id="payments">
+            <Card>
+              <CardHeader>
+                <CardTitle>Payments</CardTitle>
+              </CardHeader>
+              <CardContent>
+                Payments content placeholder
+              </CardContent>
+            </Card>
+          </div>
         </TabsContent>
 
+        {/* DUES */}
         <TabsContent value="dues">
-          <Card>
-            <CardHeader>
-              <CardTitle>Dues</CardTitle>
-            </CardHeader>
-            <CardContent>
-              Dues content placeholder
-            </CardContent>
-          </Card>
+          <div id="dues">
+            <Card>
+              <CardHeader>
+                <CardTitle>Dues</CardTitle>
+              </CardHeader>
+              <CardContent>
+                Dues content placeholder
+              </CardContent>
+            </Card>
+          </div>
         </TabsContent>
 
+        {/* ANNOUNCEMENTS */}
         <TabsContent value="announcements">
-          <Card>
-            <CardHeader>
-              <CardTitle>Announcements</CardTitle>
-            </CardHeader>
-            <CardContent>
-              Announcements placeholder
-            </CardContent>
-          </Card>
+          <div id="announcements">
+            <Card>
+              <CardHeader>
+                <CardTitle>Announcements</CardTitle>
+              </CardHeader>
+              <CardContent>
+                Announcements placeholder
+              </CardContent>
+            </Card>
+          </div>
         </TabsContent>
 
+        {/* DOCUMENTS */}
         <TabsContent value="documents">
-          <Card>
-            <CardHeader>
-              <CardTitle>Documents</CardTitle>
-            </CardHeader>
-            <CardContent>
-              Documents placeholder
-            </CardContent>
-          </Card>
+          <div id="documents">
+            <Card>
+              <CardHeader>
+                <CardTitle>Documents</CardTitle>
+              </CardHeader>
+              <CardContent>
+                Documents placeholder
+              </CardContent>
+            </Card>
+          </div>
         </TabsContent>
       </Tabs>
     </div>

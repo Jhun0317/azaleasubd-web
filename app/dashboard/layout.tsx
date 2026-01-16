@@ -49,12 +49,14 @@ export default function DashboardLayout({
           <button onClick={() => setOpen(false)}>✕</button>
         </div>
 
-        <nav className="p-4 space-y-2">
-          <a href="/dashboard" className="block">Dashboard</a>
-          <a href="/dashboard/payments" className="block">Payments</a>
-          <a href="/dashboard/settings" className="block">Settings</a>
-        </nav>
-      </aside>
+<nav className="p-4 space-y-2">
+  <a href="#payments" className="block">Payments</a>
+  <a href="#dues" className="block">Dues</a>
+  <a href="#announcements" className="block">Announcements</a>
+  <a href="#documents" className="block">Documents</a>
+</nav>
+
+     </aside>
 
       {/* Page content */}
       <div className="max-w-full p-4 sm:p-6">
