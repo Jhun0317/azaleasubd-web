@@ -1,107 +1,93 @@
 "use client"
 
-import React, { useState, useEffect } from "react"
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
-import { base44 } from "@/api/base44Client"
-import { format } from "date-fns"
-import {
-  Settings,
-  CreditCard,
-  Bell,
-  FileText,
-  Save,
-  Plus,
-  Upload,
-  CheckCircle2,
-  XCircle,
-  Eye,
-} from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Badge } from "@/components/ui/badge"
-import { Switch } from "@/components/ui/switch"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
 import {
   Tabs,
-  TabsContent,
   TabsList,
   TabsTrigger,
+  TabsContent,
 } from "@/components/ui/tabs"
-import { toast } from "sonner"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  CreditCard,
+  Settings,
+  Bell,
+  FileText,
+} from "lucide-react"
 
-type DuesSetting = {
-  id?: string
-  monthly_amount?: number
-  due_day?: number
-  late_fee?: number
-  grace_period_days?: number
-  gcash_number?: string
-  bank_details?: string
-}
-
-export default function AdminSettings() {
-  const [duesData, setDuesData] = useState({
-    monthly_amount: "",
-    due_day: 15,
-    late_fee: "",
-    grace_period_days: 5,
-    gcash_number: "",
-    bank_details: "",
-  })
-
-  const queryClient = useQueryClient()
-
-  const { data: duesSetting } = useQuery<DuesSetting | null>({
-    queryKey: ["duesSetting"],
-    queryFn: async () => {
-      const settings = await base44.entities.DuesSetting.list(
-        "-effective_date",
-        1
-      )
-      return (settings[0] as DuesSetting) || null
-    },
-  })
-
-  useEffect(() => {
-    if (duesSetting) {
-      setDuesData({
-        monthly_amount: duesSetting.monthly_amount?.toString() || "",
-        due_day: duesSetting.due_day || 15,
-        late_fee: duesSetting.late_fee?.toString() || "",
-        grace_period_days: duesSetting.grace_period_days || 5,
-        gcash_number: duesSetting.gcash_number || "",
-        bank_details: duesSetting.bank_details || "",
-      })
-    }
-  }, [duesSetting])
-
+export default function DashboardPage() {
   return (
-    <div>
-      <h1 className="text-2xl font-bold">Admin Settings</h1>
-      <p className="text-slate-500 mt-1">
-        Manage HOA settings, payments, and content
-      </p>
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-2xl font-bold">Admin Settings</h1>
+        <p className="text-muted-foreground">
+          Manage HOA settings, payments, and content
+        </p>
+      </div>
+
+      <Tabs defaultValue="payments" className="space-y-6">
+        <TabsList className="grid grid-cols-4 w-full max-w-2xl">
+          <TabsTrigger value="payments">
+            <CreditCard className="w-4 h-4 mr-2" />
+            Payments
+          </TabsTrigger>
+          <TabsTrigger value="dues">
+            <Settings className="w-4 h-4 mr-2" />
+            Dues
+          </TabsTrigger>
+          <TabsTrigger value="announcements">
+            <Bell className="w-4 h-4 mr-2" />
+            Announce
+          </TabsTrigger>
+          <TabsTrigger value="documents">
+            <FileText className="w-4 h-4 mr-2" />
+            Documents
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="payments">
+          <Card>
+            <CardHeader>
+              <CardTitle>Payments</CardTitle>
+            </CardHeader>
+            <CardContent>
+              Payments content placeholder
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="dues">
+          <Card>
+            <CardHeader>
+              <CardTitle>Dues</CardTitle>
+            </CardHeader>
+            <CardContent>
+              Dues content placeholder
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="announcements">
+          <Card>
+            <CardHeader>
+              <CardTitle>Announcements</CardTitle>
+            </CardHeader>
+            <CardContent>
+              Announcements placeholder
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="documents">
+          <Card>
+            <CardHeader>
+              <CardTitle>Documents</CardTitle>
+            </CardHeader>
+            <CardContent>
+              Documents placeholder
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
     </div>
   )
 }
