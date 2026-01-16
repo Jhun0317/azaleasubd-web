@@ -11,7 +11,16 @@ export default function DashboardLayout({
     <div className="min-h-screen bg-slate-50 overflow-x-hidden">
       
       {/* Topbar */}
-      <header className="h-14 bg-white border-b flex items-center px-4">
+      <header className="h-14 bg-white border-b flex items-center px-4 gap-3">
+        
+        {/* Hamburger menu (mobile only) */}
+        <button
+          className="md:hidden text-xl"
+          aria-label="Open menu"
+        >
+          ☰
+        </button>
+
         <h1 className="text-base font-semibold">Dashboard</h1>
       </header>
 
