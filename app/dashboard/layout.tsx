@@ -1,6 +1,21 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+useEffect(() => {
+  const updateFromHash = () => {
+    const hash = window.location.hash.replace("#", "")
+    if (hash) {
+      setActive(hash)
+    }
+  }
+
+  updateFromHash()
+  window.addEventListener("hashchange", updateFromHash)
+
+  return () => {
+    window.removeEventListener("hashchange", updateFromHash)
+  }
+}, [])
 
 export default function DashboardLayout({
   children,

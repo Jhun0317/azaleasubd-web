@@ -27,11 +27,15 @@ export default function DashboardPage() {
         </p>
       </div>
 
-      <Tabs
-        value={activeTab}
-        onValueChange={setActiveTab}
-        className="space-y-6"
-      >
+     <Tabs
+  value={activeTab}
+  onValueChange={(value) => {
+    setActiveTab(value)
+    window.location.hash = value
+  }}
+  className="space-y-6"
+>
+
         <TabsList className="grid grid-cols-4 w-full max-w-2xl">
           <TabsTrigger value="payments">
             <CreditCard className="w-4 h-4 mr-2" />
