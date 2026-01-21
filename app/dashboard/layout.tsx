@@ -1,31 +1,17 @@
-"use client"
+import { redirect } from "next/navigation";
+import DashboardShell from "../../components/ui/DashboardShell";
+import { getAuthUser } from "../lib/auth";
 
-import type { ReactNode } from "react"
-import Sidebar from "@/components/ui/Sidebar"
-import Topbar from "@/components/ui/Topbar"
+export default async function DashboardLayout({ children }) {
+  const user = await getAuthUser();
 
-export default function DashboardLayout({
-  children,
-}: {
-  children: ReactNode
-}) {
+  if (!user) {
+    redirect("/login");
+  }
+
   return (
-    <div className="flex h-screen w-full bg-slate-50 overflow-hidden">
-      {/* Sidebar */}
-      <Sidebar />
-
-      {/* Main area */}
-      <div className="flex flex-1 flex-col overflow-hidden">
-        {/* Top bar */}
-        <Topbar />
-
-        {/* Page content */}
-        <div className="flex-1 overflow-y-auto">
-          <div className="p-4 md:p-6">
-            {children}
-          </div>
-        </div>
-      </div>
-    </div>
-  )
+    <DashboardShell isAdmin={user.role === "admin"}>
+      {children}
+    </DashboardShell>
+  );
 }

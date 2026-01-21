@@ -1,120 +1,52 @@
-"use client"
+import StatsCard from "@/components/dashboard/StatsCard";
+import QuickActions from "@/components/dashboard/QuickActions";
+import RecentAnnouncements from "@/components/dashboard/RecentAnnouncements";
+import UpcomingEvents from "@/components/dashboard/UpcomingEvents";
+import PaymentStatus from "@/components/dashboard/PaymentStatus";
 
-import { useState, useEffect } from "react"
-import {
-  Tabs,
-  TabsList,
-  TabsTrigger,
-  TabsContent,
-} from "@/components/ui/tabs"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import {
-  CreditCard,
-  Settings,
-  Bell,
-  FileText,
-} from "lucide-react"
+import { Bell, Calendar, CreditCard } from "lucide-react";
+import { prisma } from "@/lib/prisma";
 
-export default function DashboardPage() {
-  const [activeTab, setActiveTab] = useState("payments")
-
-  // 🔁 Sync tab with URL hash (sidebar → tabs)
-  useEffect(() => {
-    const syncFromHash = () => {
-      const hash = window.location.hash.replace("#", "")
-      if (hash) {
-        setActiveTab(hash)
-      }
-    }
-
-    syncFromHash()
-    window.addEventListener("hashchange", syncFromHash)
-
-    return () => {
-      window.removeEventListener("hashchange", syncFromHash)
-    }
-  }, [])
+export default async function DashboardPage() {
+  // ✅ SERVER-SIDE DATA FETCHING
+  const announcements = await prisma.announcement.findMany({
+    orderBy: [
+      { isPinned: "desc" },
+      { createdAt: "desc" },
+    ],
+    take: 4,
+  });
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold">Admin Settings</h1>
-        <p className="text-muted-foreground">
-          Manage HOA settings, payments, and content
+      {/* Welcome Header */}
+      <div className="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl p-6 text-white shadow-lg">
+        <h1 className="text-2xl font-bold">Welcome back! 👋</h1>
+        <p className="mt-1 text-emerald-100 text-sm">
+          Stay updated with your community. Here's what's happening today.
         </p>
       </div>
 
-      <Tabs
-        value={activeTab}
-        onValueChange={(value) => {
-          setActiveTab(value)
-          window.location.hash = value
-        }}
-        className="space-y-6"
-      >
-        <TabsList className="grid grid-cols-4 w-full max-w-2xl">
-          <TabsTrigger value="payments">
-            <CreditCard className="w-4 h-4 mr-2" />
-            Payments
-          </TabsTrigger>
-          <TabsTrigger value="dues">
-            <Settings className="w-4 h-4 mr-2" />
-            Dues
-          </TabsTrigger>
-          <TabsTrigger value="announcements">
-            <Bell className="w-4 h-4 mr-2" />
-            Announce
-          </TabsTrigger>
-          <TabsTrigger value="documents">
-            <FileText className="w-4 h-4 mr-2" />
-            Documents
-          </TabsTrigger>
-        </TabsList>
+      {/* Stats Cards */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <StatsCard title="Unread Messages" value={0} icon={Bell} color="amber" />
+        <StatsCard title="Upcoming Events" value={0} icon={Calendar} color="blue" />
+        <StatsCard title="Announcements" value={announcements.length} icon={Bell} color="emerald" />
+        <StatsCard title="Payments Made" value={0} icon={CreditCard} color="rose" />
+      </div>
 
-        <TabsContent value="payments">
-          <div id="payments">
-            <Card>
-              <CardHeader>
-                <CardTitle>Payments</CardTitle>
-              </CardHeader>
-              <CardContent>Payments content placeholder</CardContent>
-            </Card>
-          </div>
-        </TabsContent>
+      {/* Main Content */}
+      <div className="grid lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2 space-y-6">
+          <QuickActions />
+          <RecentAnnouncements announcements={announcements} />
+        </div>
 
-        <TabsContent value="dues">
-          <div id="dues">
-            <Card>
-              <CardHeader>
-                <CardTitle>Dues</CardTitle>
-              </CardHeader>
-              <CardContent>Dues content placeholder</CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="announcements">
-          <div id="announcements">
-            <Card>
-              <CardHeader>
-                <CardTitle>Announcements</CardTitle>
-              </CardHeader>
-              <CardContent>Announcements placeholder</CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="documents">
-          <div id="documents">
-            <Card>
-              <CardHeader>
-                <CardTitle>Documents</CardTitle>
-              </CardHeader>
-              <CardContent>Documents placeholder</CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-      </Tabs>
+        <div className="space-y-6">
+          <PaymentStatus payments={[]} duesSetting={null} />
+          <UpcomingEvents events={[]} />
+        </div>
+      </div>
     </div>
-  )
+  );
 }
