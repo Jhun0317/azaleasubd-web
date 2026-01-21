@@ -1,3 +1,5 @@
+import type { Payment } from "@/types/payment";
+
 import StatsCard from "@/components/dashboard/StatsCard";
 import QuickActions from "@/components/dashboard/QuickActions";
 import RecentAnnouncements from "@/components/dashboard/RecentAnnouncements";
@@ -10,12 +12,12 @@ import { prisma } from "@/lib/prisma";
 export default async function DashboardPage() {
   // ✅ SERVER-SIDE DATA FETCHING
   const announcements = await prisma.announcement.findMany({
-    orderBy: [
-      { isPinned: "desc" },
-      { createdAt: "desc" },
-    ],
+    orderBy: [{ isPinned: "desc" }, { createdAt: "desc" }],
     take: 4,
   });
+
+  // ✅ TEMPORARY: typed empty payments (prevents never[])
+  const payments: Payment[] = [];
 
   return (
     <div className="space-y-6">
@@ -31,7 +33,12 @@ export default async function DashboardPage() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <StatsCard title="Unread Messages" value={0} icon={Bell} color="amber" />
         <StatsCard title="Upcoming Events" value={0} icon={Calendar} color="blue" />
-        <StatsCard title="Announcements" value={announcements.length} icon={Bell} color="emerald" />
+        <StatsCard
+          title="Announcements"
+          value={announcements.length}
+          icon={Bell}
+          color="emerald"
+        />
         <StatsCard title="Payments Made" value={0} icon={CreditCard} color="rose" />
       </div>
 
