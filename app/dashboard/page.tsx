@@ -1,4 +1,3 @@
-import type { Payment } from "@/types/payment";
 
 import StatsCard from "@/components/dashboard/StatsCard";
 import QuickActions from "@/components/dashboard/QuickActions";
@@ -8,6 +7,15 @@ import PaymentStatus from "@/components/dashboard/PaymentStatus";
 
 import { Bell, Calendar, CreditCard } from "lucide-react";
 import { prisma } from "@/lib/prisma";
+
+type Payment = {
+  id: number;
+  period: string;
+  amount: number;
+  status: "pending" | "verified" | "rejected";
+  paid_at: string;
+};
+
 
 export default async function DashboardPage() {
   // ✅ SERVER-SIDE DATA FETCHING
