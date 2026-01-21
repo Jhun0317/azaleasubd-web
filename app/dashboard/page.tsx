@@ -43,7 +43,7 @@ export default async function DashboardPage() {
         </div>
 
         <div className="space-y-6">
-          <PaymentStatus payments={[]} duesSetting={null} />
+          <PaymentStatus payments={payments} />
           <UpcomingEvents events={[]} />
         </div>
       </div>
