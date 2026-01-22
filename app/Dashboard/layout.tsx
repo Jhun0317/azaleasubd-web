@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { redirect } from "next/navigation";
 import DashboardShell from "@/components/ui/DashboardShell";
 import { getAuthUser } from "../lib/auth";
