@@ -10,23 +10,21 @@ import {
 } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
-import type { Announcement } from "@/types/announcement";
+
+type Announcement = {
+  id: string;
+  title: string;
+  content: string;
+  priority: "urgent" | "important" | "normal";
+  isPinned: boolean;
+  createdAt: Date;
+};
 
 type Props = {
   announcements: Announcement[];
-  limit?: number;
-  showViewAll?: boolean;
 };
 
-const priorityConfig: Record<
-  Announcement["priority"],
-  {
-    icon: React.ElementType;
-    color: string;
-    bg: string;
-    border: string;
-  }
-> = {
+const priorityConfig = {
   urgent: {
     icon: AlertTriangle,
     color: "text-red-500",
@@ -47,38 +45,28 @@ const priorityConfig: Record<
   },
 };
 
-export default function RecentAnnouncements({
-  announcements,
-  limit,
-  showViewAll = false,
-}: Props) {
-  const list = limit ? announcements.slice(0, limit) : announcements;
-
+export default function RecentAnnouncements({ announcements }: Props) {
   return (
     <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-slate-900">
-          Announcements
-        </h3>
+        <h3 className="text-lg font-semibold">Announcements</h3>
 
-        {showViewAll && (
-          <Link
-            href="/dashboard/announcements"
-            className="text-sm text-emerald-600 hover:text-emerald-700 font-medium flex items-center gap-1"
-          >
-            View All <ChevronRight className="w-4 h-4" />
-          </Link>
-        )}
+        <Link
+          href="/dashboard/announcements"
+          className="text-sm text-emerald-600 hover:underline flex items-center gap-1"
+        >
+          View All <ChevronRight className="w-4 h-4" />
+        </Link>
       </div>
 
-      {list.length === 0 ? (
+      {announcements.length === 0 ? (
         <div className="text-center py-10">
           <Bell className="w-10 h-10 text-slate-300 mx-auto mb-2" />
           <p className="text-sm text-slate-500">No announcements yet</p>
         </div>
       ) : (
         <div className="space-y-3">
-          {list.map((a) => {
+          {announcements.map((a) => {
             const cfg = priorityConfig[a.priority];
             const Icon = cfg.icon;
 
@@ -86,18 +74,13 @@ export default function RecentAnnouncements({
               <div
                 key={a.id}
                 className={cn(
-                  "p-4 rounded-xl border hover:shadow-sm",
+                  "p-4 rounded-xl border",
                   cfg.bg,
                   cfg.border
                 )}
               >
                 <div className="flex gap-3">
-                  <div
-                    className={cn(
-                      "p-2 rounded-lg bg-white",
-                      cfg.color
-                    )}
-                  >
+                  <div className={cn("p-2 rounded-lg bg-white", cfg.color)}>
                     <Icon className="w-4 h-4" />
                   </div>
 
@@ -116,10 +99,7 @@ export default function RecentAnnouncements({
                     </p>
 
                     <p className="text-xs text-slate-400 mt-2">
-                      {format(
-                        new Date(a.createdAt),
-                        "MMM d, yyyy"
-                      )}
+                      {format(new Date(a.createdAt), "MMM d, yyyy")}
                     </p>
                   </div>
                 </div>

@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 
 import StatsCard from "@/components/dashboard/StatsCard";
 import QuickActions from "@/components/dashboard/QuickActions";
@@ -16,13 +17,34 @@ type Payment = {
   paid_at: string;
 };
 
+type Announcement = {
+  id: string;
+  title: string;
+  content: string;
+  priority: "urgent" | "important" | "normal";
+  isPinned: boolean;
+  createdAt: Date;
+};
 
 export default async function DashboardPage() {
   // ✅ SERVER-SIDE DATA FETCHING
   const announcements = await prisma.announcement.findMany({
-    orderBy: [{ isPinned: "desc" }, { createdAt: "desc" }],
+    orderBy: [
+      { isPinned: "desc" },
+      { createdAt: "desc" },
+    ],
     take: 4,
   });
+
+  // ✅ Normalize Prisma data for strict typing
+  const typedAnnouncements: Announcement[] = announcements.map((a) => ({
+    id: a.id,
+    title: a.title,
+    content: a.content,
+    priority: a.priority as "urgent" | "important" | "normal",
+    isPinned: a.isPinned,
+    createdAt: a.createdAt,
+  }));
 
   // ✅ TEMPORARY: typed empty payments (prevents never[])
   const payments: Payment[] = [];
@@ -43,7 +65,7 @@ export default async function DashboardPage() {
         <StatsCard title="Upcoming Events" value={0} icon={Calendar} color="blue" />
         <StatsCard
           title="Announcements"
-          value={announcements.length}
+          value={typedAnnouncements.length}
           icon={Bell}
           color="emerald"
         />
@@ -54,7 +76,7 @@ export default async function DashboardPage() {
       <div className="grid lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
           <QuickActions />
-          <RecentAnnouncements announcements={announcements} />
+          <RecentAnnouncements announcements={typedAnnouncements} />
         </div>
 
         <div className="space-y-6">
