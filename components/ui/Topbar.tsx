@@ -1,29 +1,38 @@
-'use client'
+'use client';
 
-import { Menu, Bell, LogOut } from 'lucide-react'
+import { Menu, Bell, LogOut } from 'lucide-react';
+import {
+  Avatar,
+  AvatarFallback,
+} from '@/components/ui/avatar';
 
-export default function Topbar({
+type TopBarProps = {
+  onMenuClick?: () => void;
+  onLogout?: () => void;
+  unreadCount?: number;
+  user?: {
+    full_name?: string;
+  };
+};
+
+export default function TopBar({
   onMenuClick,
-  user,
-  unreadCount = 0,
   onLogout,
-}: {
-  onMenuClick?: () => void
-  user?: { full_name?: string }
-  unreadCount?: number
-  onLogout?: () => void
-}) {
+  unreadCount = 0,
+  user,
+}: TopBarProps) {
   const initials =
     user?.full_name
       ?.split(' ')
-      .map(n => n[0])
+      .map((n) => n[0])
       .join('')
-      .slice(0, 2) || 'U'
+      .slice(0, 2) || 'U';
 
   return (
     <header className="h-16 border-b bg-white flex items-center justify-between px-4 lg:px-6">
       <div className="flex items-center gap-3">
         <button
+          type="button"
           onClick={onMenuClick}
           className="lg:hidden p-2 rounded-md hover:bg-slate-100"
         >
@@ -42,12 +51,13 @@ export default function Topbar({
           )}
         </div>
 
-        {/* SIMPLE AVATAR — NO RADIX */}
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted text-sm font-medium">
-          {initials}
-        </div>
+        {/* ✅ Correct Avatar usage */}
+        <Avatar className="h-10 w-10">
+          <AvatarFallback>{initials}</AvatarFallback>
+        </Avatar>
 
         <button
+          type="button"
           onClick={onLogout}
           className="p-2 rounded-md hover:bg-slate-100"
         >
@@ -55,5 +65,5 @@ export default function Topbar({
         </button>
       </div>
     </header>
-  )
+  );
 }
