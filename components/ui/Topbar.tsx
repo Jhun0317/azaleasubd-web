@@ -1,27 +1,22 @@
 'use client'
 
 import { Menu, Bell, LogOut } from 'lucide-react'
-import { AvatarFallback } from '@/components/ui/avatar'
 
-type TopBarProps = {
-  onMenuClick?: () => void
-  onLogout?: () => void
-  unreadCount?: number
-  user?: {
-    full_name?: string
-  }
-}
-
-export default function TopBar({
+export default function Topbar({
   onMenuClick,
   user,
   unreadCount = 0,
   onLogout,
-}: TopBarProps) {
+}: {
+  onMenuClick?: () => void
+  user?: { full_name?: string }
+  unreadCount?: number
+  onLogout?: () => void
+}) {
   const initials =
     user?.full_name
       ?.split(' ')
-      .map((n) => n[0])
+      .map(n => n[0])
       .join('')
       .slice(0, 2) || 'U'
 
@@ -47,9 +42,9 @@ export default function TopBar({
           )}
         </div>
 
-        {/* Avatar container */}
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted">
-          <AvatarFallback>{initials}</AvatarFallback>
+        {/* SIMPLE AVATAR — NO RADIX */}
+        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted text-sm font-medium">
+          {initials}
         </div>
 
         <button
