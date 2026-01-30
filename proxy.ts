@@ -1,10 +1,11 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-export function middleware(request: NextRequest) {
+// In Next.js 16, this function name must match the filename (proxy)
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // If the user hits the dashboard root, send them to payments
+  // Replicating your dashboard landing logic
   if (pathname === '/dashboard') {
     return NextResponse.redirect(new URL('/client/payments', request.url));
   }
@@ -12,7 +13,7 @@ export function middleware(request: NextRequest) {
   return NextResponse.next();
 }
 
-// This ensures the middleware only runs on the dashboard path
+// Keeping your matcher the same
 export const config = {
   matcher: ['/dashboard/:path*'],
 };
