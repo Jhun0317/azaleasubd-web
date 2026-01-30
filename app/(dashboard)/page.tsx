@@ -1,10 +1,8 @@
 export default function DashboardPage() {
   return (
-    <div className="p-8">
-      <div className="bg-emerald-500 rounded-2xl p-6 text-white mb-6">
-        <h1 className="text-xl font-bold">Dashboard Updated</h1>
-        <p>If you see this, the duplicate sidebar should be gone.</p>
-      </div>
+    <div className="p-20 text-center">
+      <h1 className="text-4xl font-bold">Dashboard Reset Successful</h1>
+      <p className="mt-4 text-gray-500">Everything is empty. We can start building from here.</p>
     </div>
   );
 }
