@@ -3,7 +3,7 @@ import { CreditCard, FileText, MessageSquare, Calendar, ChevronRight, Bell, Info
 export default function DashboardPage() {
   return (
     <div className="space-y-8">
-      {/* WELCOME BANNER */}
+      {/* WELCOME BANNER - This is the green header */}
       <div className="relative overflow-hidden bg-[#10b981] rounded-[2rem] p-10 text-white shadow-lg shadow-emerald-500/10">
         <div className="relative z-10">
           <h1 className="text-3xl font-bold mb-2">Welcome back, Carsido! 👋</h1>
@@ -19,6 +19,7 @@ export default function DashboardPage() {
         <StatCard label="Payments Made" value="0" icon={<CreditCard className="text-rose-500" />} />
       </div>
 
+      {/* MAIN CONTENT GRID */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
           <QuickActions />
@@ -26,7 +27,9 @@ export default function DashboardPage() {
           <div className="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm">
             <div className="flex justify-between items-center mb-6">
               <h3 className="font-bold text-slate-800">Recent Announcements</h3>
-              <button className="text-emerald-600 text-sm font-semibold flex items-center gap-1">View All <ChevronRight size={14}/></button>
+              <button className="text-emerald-600 text-sm font-semibold flex items-center gap-1">
+                View All <ChevronRight size={14}/>
+              </button>
             </div>
             
             <div className="space-y-4">
@@ -46,17 +49,18 @@ export default function DashboardPage() {
           </div>
         </div>
         
+        {/* RIGHT SIDEBAR (Payment Status) */}
         <div className="space-y-8">
            <div className="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm">
              <div className="flex justify-between items-center mb-6">
                <h3 className="font-bold text-slate-800">Payment Status</h3>
-               <span className="text-emerald-600 text-xs font-bold cursor-pointer">View History</span>
+               <span className="text-emerald-600 text-xs font-bold cursor-pointer hover:underline">View History</span>
              </div>
              <div className="p-4 bg-emerald-50/50 rounded-2xl mb-6 border border-emerald-100">
                 <p className="text-[10px] text-emerald-600 font-bold uppercase tracking-wider">Current Balance</p>
                 <p className="text-3xl font-black text-emerald-700">₱0.00</p>
              </div>
-             <button className="w-full py-4 bg-[#10b981] text-white rounded-2xl font-bold hover:bg-emerald-600 transition-all flex items-center justify-center gap-2">
+             <button className="w-full py-4 bg-[#10b981] text-white rounded-2xl font-bold hover:bg-emerald-600 transition-all flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20">
                <CreditCard size={18}/> Pay Now
              </button>
            </div>
@@ -66,9 +70,10 @@ export default function DashboardPage() {
   );
 }
 
+// Helper Components (Keep these at the bottom)
 function StatCard({ label, value, icon }: { label: string, value: string, icon: any }) {
   return (
-    <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex items-center justify-between">
+    <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex items-center justify-between transition-transform hover:scale-[1.02]">
       <div>
         <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">{label}</p>
         <p className="text-3xl font-black text-slate-800">{value}</p>
@@ -83,13 +88,13 @@ function StatCard({ label, value, icon }: { label: string, value: string, icon: 
 function AnnouncementItem({ title, date, type, desc }: any) {
   const isEmergency = type === 'emergency';
   return (
-    <div className={`p-5 rounded-2xl border ${isEmergency ? 'bg-rose-50/30 border-rose-100' : 'bg-blue-50/30 border-blue-100'}`}>
+    <div className={`p-5 rounded-2xl border transition-colors ${isEmergency ? 'bg-rose-50/30 border-rose-100 hover:bg-rose-50' : 'bg-blue-50/30 border-blue-100 hover:bg-blue-50'}`}>
       <div className="flex gap-4">
         <div className={`mt-1 ${isEmergency ? 'text-rose-500' : 'text-blue-500'}`}><Info size={18}/></div>
         <div>
           <h4 className="text-sm font-bold text-slate-800">{title}</h4>
-          <p className="text-xs text-slate-500 mt-1 line-clamp-2">{desc}</p>
-          <p className="text-[10px] text-slate-400 mt-2 font-medium">{date}</p>
+          <p className="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">{desc}</p>
+          <p className="text-[10px] text-slate-400 mt-2 font-medium tracking-tight uppercase">{date}</p>
         </div>
       </div>
     </div>
