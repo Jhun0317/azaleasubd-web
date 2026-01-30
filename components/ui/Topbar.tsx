@@ -14,14 +14,14 @@ type TopBarProps = {
 
 export default function TopBar({
   onMenuClick,
-  onLogout,
-  unreadCount = 0,
   user,
+  unreadCount = 0,
+  onLogout,
 }: TopBarProps) {
   const initials =
     user?.full_name
       ?.split(' ')
-      .map(n => n[0])
+      .map((n) => n[0])
       .join('')
       .slice(0, 2) || 'U'
 
@@ -47,7 +47,8 @@ export default function TopBar({
           )}
         </div>
 
-        <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center">
+        {/* Avatar container */}
+        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted">
           <AvatarFallback>{initials}</AvatarFallback>
         </div>
 
