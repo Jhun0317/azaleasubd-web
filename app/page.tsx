@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
 export default function Home() {
-  // This automatically sends users to your HOA UI
+  // This is the "Base44" trick to skip the welcome screen
   redirect("/client/payments");
 }
