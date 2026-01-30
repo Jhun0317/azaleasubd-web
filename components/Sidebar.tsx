@@ -25,10 +25,7 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside className="w-64 bg-white h-screen border-r border-slate-100 flex flex-col p-6 sticky top-0">
-      <div className="flex items-center gap-2 mb-10">
-        <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center text-white">
-          <ShieldCheck size={20} />
+    
         </div>
         <div>
           <h1 className="font-bold text-slate-800 leading-none">HOA Portal</h1>
