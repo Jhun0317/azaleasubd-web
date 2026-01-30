@@ -1,7 +1,6 @@
 import { redirect } from "next/navigation";
 
 export default function Home() {
-  // This forces the site to jump past the boilerplate
-  // and load your actual HOA content.
+  // This automatically sends users to your HOA UI
   redirect("/client/payments");
 }

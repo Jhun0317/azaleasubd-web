@@ -1,53 +1,11 @@
-'use client';
-
-import nextDynamic from "next/dynamic";
-import Link from "next/link";
-
-const PaymentHistory = nextDynamic(
-  () => import("@/components/payments/PaymentHistory"),
-  { ssr: false }
-);
-
-export type Payment = {
-  id: number;
-  period: string;
-  amount: number;
-  status: "pending" | "verified" | "rejected";
-  paid_at: string;
-};
-
-/* ===== MOCK DATA (replace with DB later) ===== */
-async function getPayments(): Promise<Payment[]> {
-  return [
-    {
-      id: 1,
-      period: "January 2026",
-      amount: 500,
-      status: "verified",
-      paid_at: "2026-01-15",
-    },
-  ];
-}
-
-export default async function PaymentsPage() {
-  const payments: Payment[] = await getPayments();
-
+export default function PaymentsPage() {
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Payments</h1>
-
-        <Link
-          href="/dashboard/payments/pay"
-          className="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700"
-        >
-          Pay Now
-        </Link>
-      </div>
-
-      {/* History */}
-      <PaymentHistory payments={payments} />
+       {/* This is where your "Welcome back, Carsido!" banner code goes */}
+       <div className="bg-emerald-500 text-white p-6 rounded-lg">
+         <h1>Welcome back, Carsido! 👋</h1>
+       </div>
+       {/* Rest of your dashboard widgets */}
     </div>
   );
 }
