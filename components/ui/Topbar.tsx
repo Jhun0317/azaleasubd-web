@@ -1,7 +1,7 @@
 'use client';
 
 import { Menu, Bell, LogOut } from 'lucide-react';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 export default function TopBar({
   onMenuClick,
