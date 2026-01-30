@@ -5,7 +5,7 @@ import {
   Calendar, 
   FileText, 
   MessageSquare, 
-  Poll, 
+  Vote, // Changed from Poll to Vote
   User,
   Settings,
   Users,
@@ -21,6 +21,7 @@ export default function Sidebar() {
     { icon: <Calendar size={18} />, label: 'Events' },
     { icon: <FileText size={18} />, label: 'Documents' },
     { icon: <MessageSquare size={18} />, label: 'Messages' },
+    { icon: <Vote size={18} />, label: 'Polls' }, // Updated icon here too
   ];
 
   return (
