@@ -1,3 +1,4 @@
+import "./globals.css"; // 
 import QueryProvider from "./providers/QueryProvider";
 
 export const metadata = {
@@ -12,7 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body className="antialiased"> {/* Added antialiased for cleaner text */}
         <QueryProvider>
           {children}
         </QueryProvider>
