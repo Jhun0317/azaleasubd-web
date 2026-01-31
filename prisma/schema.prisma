@@ -27,9 +27,19 @@ model Event {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  paymentStatus String    @default("UNPAID") 
+  id       String   @id @default(cuid())
+  email    String   @unique
+  name     String?
+  profile  Profile? // This field creates the link in the User model
+}
+
+model Profile {
+  id          String   @id @default(cuid())
+  bio         String?
+  avatarUrl   String?
+  phoneNumber String?
+  userId      String   @unique // This must be unique for a 1-to-1 relation
+  user        User     @relation(fields: [userId], references: [id])
 }
 
 model Announcement {
