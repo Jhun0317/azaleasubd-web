@@ -16,7 +16,10 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased">
         <QueryProvider>
-        
+          <div className="flex min-h-screen bg-slate-50">
+            {/* This puts the Sidebar on the left for EVERY page */}
+            <Sidebar /> 
+            
             <main className="flex-1">
               {children}
             </main>
