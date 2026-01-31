@@ -64,3 +64,4 @@
     </div>
   )}
 </nav>
+export default Sidebar;
