@@ -54,13 +54,15 @@ model Announcement {
 }
 
 model Payment {
-  id          String   @id @default(cuid())
-  amount      Float
-  status      String   @default("PENDING")
-  description String   // Add this line
-  userId      String   // Add this line
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id              String    @id @default(cuid())
+  amount          Float
+  status          String    @default("PENDING")
+  description     String
+  userId          String
+  paidAt          DateTime? // Add this (Optional, since it's only set after payment)
+  paymentIntentId String?   // Highly recommended for webhooks
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 }
 
 model Document {
