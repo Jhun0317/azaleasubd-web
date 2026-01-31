@@ -1,7 +1,10 @@
 "use client";
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, CreditCard, Megaphone, Calendar, FileText, User, HeadphonesIcon, ShieldCheck, Settings } from 'lucide-react';
+import { 
+  LayoutDashboard, CreditCard, Megaphone, Calendar, 
+  FileText, User, HeadphonesIcon, ShieldCheck, Settings, PieChart 
+} from 'lucide-react';
 
 interface SidebarProps {
   onItemClick?: () => void;
@@ -28,6 +31,7 @@ export default function Sidebar({ onItemClick }: SidebarProps) {
 
   return (
     <aside className="w-full h-full bg-white border-r border-slate-100 flex flex-col p-6 overflow-y-auto">
+      {/* Logo Section */}
       <div className="flex items-center gap-3 mb-10 px-2">
         <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center text-white font-bold">H</div>
         <div>
@@ -37,13 +41,14 @@ export default function Sidebar({ onItemClick }: SidebarProps) {
       </div>
 
       <nav className="flex-1 space-y-2">
+        {/* Main Menu Items */}
         {menuItems.map((item) => {
           const isActive = item.href === '/' ? pathname === '/' : pathname?.startsWith(item.href);
           return (
             <Link 
               key={item.href} 
               href={item.href}
-              onClick={onItemClick} // Critical for mobile auto-close
+              onClick={onItemClick}
               className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
                 isActive ? 'bg-emerald-50 text-emerald-600 font-bold' : 'text-slate-500 hover:bg-slate-50'
               }`}
@@ -54,8 +59,35 @@ export default function Sidebar({ onItemClick }: SidebarProps) {
           );
         })}
 
+        {/* 1. PAYMENT SUMMARY: Placed below Documents */}
         {userRole === "ADMIN" && (
-          <div className="mt-8 pt-8 border-t border-slate-100">
+          <div className="mt-4 pt-4 border-t border-slate-50">
+            <div className="flex items-center gap-2 px-4 mb-3">
+              <PieChart size={12} className="text-slate-400" />
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Collection Summary</p>
+            </div>
+            
+            <div className="space-y-2 px-2">
+              {[
+                { phase: "Phase 1", total: "₱45,000", color: "bg-emerald-500" },
+                { phase: "Phase 2", total: "₱32,500", color: "bg-blue-500" },
+                { phase: "Phase 2B", total: "₱18,200", color: "bg-purple-500" },
+              ].map((item) => (
+                <div key={item.phase} className="flex items-center justify-between p-2.5 bg-slate-50/50 rounded-xl border border-transparent">
+                  <div className="flex items-center gap-2">
+                    <div className={`w-1.5 h-1.5 rounded-full ${item.color}`} />
+                    <span className="text-[11px] font-bold text-slate-700">{item.phase}</span>
+                  </div>
+                  <span className="text-[10px] font-medium text-slate-500">{item.total}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* 2. ADMIN TOOLS */}
+        {userRole === "ADMIN" && (
+          <div className="mt-6 pt-6 border-t border-slate-100">
             <div className="flex items-center gap-2 px-4 mb-4">
               <ShieldCheck size={12} className="text-slate-400" />
               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Admin Tools</p>
@@ -64,7 +96,7 @@ export default function Sidebar({ onItemClick }: SidebarProps) {
               <Link 
                 key={item.href} 
                 href={item.href}
-                onClick={onItemClick} // Added to Admin Tools to fix the "covering" issue
+                onClick={onItemClick}
                 className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
                   pathname === item.href ? 'bg-slate-800 text-white font-bold' : 'text-slate-500 hover:bg-slate-50'
                 }`}
@@ -77,11 +109,9 @@ export default function Sidebar({ onItemClick }: SidebarProps) {
         )}
       </nav>
 
+      {/* Support Button */}
       <div className="mt-auto bg-slate-50 p-4 rounded-2xl">
-        <button 
-          onClick={onItemClick} // Closes menu if they click support too
-          className="flex items-center gap-2 text-slate-700 hover:text-emerald-600 w-full"
-        >
+        <button onClick={onItemClick} className="flex items-center gap-2 text-slate-700 hover:text-emerald-600 w-full">
           <HeadphonesIcon size={16} />
           <span className="text-xs font-bold">Contact Admin</span>
         </button>
