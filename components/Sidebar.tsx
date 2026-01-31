@@ -18,8 +18,9 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   const menuItems = [
+const menuItems = [
     { icon: <LayoutDashboard size={18} />, label: 'Dashboard', href: '/' },
-    { icon: <CreditCard size={18} />, label: 'Payments', href: '/client/payments' },
+    { icon: <CreditCard size={18} />, label: 'Payments', href: '/client/payments' }, // Ensure this matches exactly
     { icon: <Megaphone size={18} />, label: 'Announcements', href: '/announcements' },
     { icon: <Calendar size={18} />, label: 'Events', href: '/events' },
     { icon: <FileText size={18} />, label: 'Documents', href: '/documents' },
