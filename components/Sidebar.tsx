@@ -10,18 +10,16 @@ import {
   MessageSquare, 
   Vote, 
   User, 
-  Settings,
-  HeadphonesIcon
+  HeadphonesIcon 
 } from 'lucide-react';
 
 export default function Sidebar() {
   const pathname = usePathname();
 
   const menuItems = [
-const menuItems = [
     { icon: <LayoutDashboard size={18} />, label: 'Dashboard', href: '/' },
-    { icon: <CreditCard size={18} />, label: 'Payments', href: '/client/payments' }, // Ensure this matches exactly
-    { icon: <Megaphone size={18} />, label: 'Announcements', href: '/announcements' },
+    { icon: <CreditCard size={18} />, label: 'Payments', href: '/client/payments' },
+    { icon: <Megaphone size={18} />, label: '/announcements', href: '/announcements' },
     { icon: <Calendar size={18} />, label: 'Events', href: '/events' },
     { icon: <FileText size={18} />, label: 'Documents', href: '/documents' },
     { icon: <MessageSquare size={18} />, label: 'Messages', href: '/messages' },
@@ -43,7 +41,11 @@ const menuItems = [
       {/* NAV LINKS */}
       <nav className="flex-1 space-y-1">
         {menuItems.map((item) => {
-          const isActive = pathname === item.href;
+          // This ensures "/" only matches exactly, but others can match sub-paths
+          const isActive = item.href === '/' 
+            ? pathname === '/' 
+            : pathname.startsWith(item.href);
+
           return (
             <Link 
               key={item.href} 
@@ -61,7 +63,7 @@ const menuItems = [
         })}
       </nav>
 
-      {/* HELP CARD (Matching your screenshot) */}
+      {/* HELP CARD */}
       <div className="mt-auto bg-slate-50 p-4 rounded-2xl">
         <p className="text-[10px] font-bold text-slate-400 uppercase mb-2">Need help?</p>
         <button className="flex items-center gap-2 text-slate-700 hover:text-emerald-600 transition-colors">
