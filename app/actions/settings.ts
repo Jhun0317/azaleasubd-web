@@ -27,11 +27,13 @@ export async function updateSystemSettings(formData: FormData) {
       },
     });
 
-    // This is crucial: it forces the Payments page to refresh its data
+    // This refreshes the data on the Payments page immediately
     revalidatePath("/"); 
-    return { success: true };
+    
+    // REMOVED the return { success: true } to fix the Type Error
   } catch (error) {
     console.error("Failed to update settings:", error);
-    return { success: false };
+    // You can throw an error here if you want the form to handle it
+    throw new Error("Failed to save settings");
   }
 }
