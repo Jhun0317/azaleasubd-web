@@ -1,6 +1,6 @@
 "use client";
 import { useState } from 'react';
-import { Save, Smartphone, Shield, Bell, Info } from 'lucide-react';
+import { Save, Smartphone, Info } from 'lucide-react';
 
 export default function AdminSettings() {
   const [gcashNumber, setGcashNumber] = useState("09123456789");
@@ -8,7 +8,7 @@ export default function AdminSettings() {
 
   const handleSave = async () => {
     setIsSaving(true);
-    // This will later call a Server Action to update your 'GlobalSettings' table
+    // Simulation of saving
     setTimeout(() => {
       setIsSaving(false);
       alert("Settings updated successfully!");
@@ -39,7 +39,7 @@ export default function AdminSettings() {
             <input 
               type="text" 
               value={gcashNumber}
-              onChange={(e) => setGcashNumber(e.e.target.value)}
+              onChange={(e) => setGcashNumber(e.target.value)} // FIXED HERE
               className="w-full px-5 py-4 bg-slate-50 border-none rounded-2xl outline-none focus:ring-2 focus:ring-emerald-500/20 font-mono text-lg"
             />
             <p className="mt-2 text-[11px] text-slate-400 flex items-center gap-1 px-1">
