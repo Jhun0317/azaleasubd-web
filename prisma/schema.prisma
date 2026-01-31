@@ -1,64 +1,17 @@
-generator client {
-  provider = "prisma-client-js"
+model GlobalSettings {
+  id                Int      @id @default(1)
+  adminGcashNumber  String   @default("09000000000")
+  adminGcashName    String   @default("Admin Name")
+  monthlyDuesAmount Float    @default(300.0)
+  updatedAt         DateTime @updatedAt
 }
 
-datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+model Event {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  date        DateTime
+  location    String
+  category    String   // e.g., "Meeting", "Social", "Maintenance"
+  createdAt   DateTime @default(now())
 }
-
-model User {
-  id        String    @id @default(cuid())
-  email     String    @unique
-  name      String?
-  payments  Payment[]
-  createdAt DateTime  @default(now())
-}
-
-model Payment {
-  id           String        @id @default(cuid())
-  amount       Int
-  status       PaymentStatus
-  description  String
-  paymongoLink String?
-  userId       String
-  user         User          @relation(fields: [userId], references: [id])
-  createdAt    DateTime      @default(now())
-  paidAt       DateTime?
-}
-
-enum PaymentStatus {
-  PENDING
-  PAID
-  FAILED
-}
-
-model Document {
-  id         String   @id @default(cuid())
-  title      String
-  fileUrl    String
-  fileType   String
-  uploadedBy String
-  createdAt  DateTime @default(now())
-}
-
-
-model Profile {
-  id        String   @id @default(cuid())
-  userId    String   @unique
-  fullName  String
-  lotNumber String
-  phone     String?
-  createdAt DateTime @default(now())
-}
-
-
-model Announcement {
-  id        String   @id @default(cuid())
-  title     String
-  content   String
-  priority  String   @default("normal")
-  isPinned  Boolean  @default(false)
-  createdAt DateTime @default(now())
-}
-
