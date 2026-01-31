@@ -75,3 +75,12 @@ model Document {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }
+
+model SystemSettings {
+  id            Int      @id @default(1)
+  monthlyDues   Float    @default(300)
+  dueDay        Int      @default(15)
+  gcashNumber   String   @default("0912049237")
+  bankDetails   String?  @db.Text
+  updatedAt     DateTime @updatedAt
+}
