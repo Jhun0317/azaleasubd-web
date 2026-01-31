@@ -59,7 +59,7 @@ export default function Sidebar({ onItemClick }: SidebarProps) {
           );
         })}
 
-        {/* 1. PAYMENT SUMMARY: Placed below Documents */}
+        {/* 1. PAYMENT SUMMARY */}
         {userRole === "ADMIN" && (
           <div className="mt-4 pt-4 border-t border-slate-50">
             <div className="flex items-center gap-2 px-4 mb-3">
@@ -69,16 +69,16 @@ export default function Sidebar({ onItemClick }: SidebarProps) {
             
             <div className="space-y-2 px-2">
               {[
-                { phase: "Phase 1", total: "₱45,000", color: "bg-emerald-500" },
-                { phase: "Phase 2", total: "₱32,500", color: "bg-blue-500" },
-                { phase: "Phase 2B", total: "₱18,200", color: "bg-purple-500" },
+                { phase: "Phase 1", color: "bg-emerald-500" },
+                { phase: "Phase 2", color: "bg-blue-500" },
+                { phase: "Phase 2B", color: "bg-purple-500" },
               ].map((item) => (
-                <div key={item.phase} className="flex items-center justify-between p-2.5 bg-slate-50/50 rounded-xl border border-transparent">
+                <div key={item.phase} className="flex items-center justify-between p-2.5 bg-slate-50/50 rounded-xl border border-transparent hover:border-slate-100 transition-all">
                   <div className="flex items-center gap-2">
                     <div className={`w-1.5 h-1.5 rounded-full ${item.color}`} />
                     <span className="text-[11px] font-bold text-slate-700">{item.phase}</span>
                   </div>
-                  <span className="text-[10px] font-medium text-slate-500">{item.total}</span>
+                  <span className="text-[10px] font-medium text-slate-400">₱0.00</span>
                 </div>
               ))}
             </div>
@@ -92,26 +92,28 @@ export default function Sidebar({ onItemClick }: SidebarProps) {
               <ShieldCheck size={12} className="text-slate-400" />
               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Admin Tools</p>
             </div>
-            {adminItems.map((item) => (
-              <Link 
-                key={item.href} 
-                href={item.href}
-                onClick={onItemClick}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  pathname === item.href ? 'bg-slate-800 text-white font-bold' : 'text-slate-500 hover:bg-slate-50'
-                }`}
-              >
-                {item.icon}
-                <span className="text-sm">{item.label}</span>
-              </Link>
-            ))}
+            {adminItems.map((item) => {
+               const isActive = pathname === item.href;
+               return (
+                <Link 
+                  key={item.href} 
+                  href={item.href}
+                  onClick={onItemClick}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                    isActive ? 'bg-slate-800 text-white font-bold shadow-md' : 'text-slate-500 hover:bg-slate-50'
+                  }`}
+                >
+                  {item.icon}
+                  <span className="text-sm">{item.label}</span>
+                </Link>
+              );
+            })}
           </div>
         )}
       </nav>
 
-      {/* Support Button */}
       <div className="mt-auto bg-slate-50 p-4 rounded-2xl">
-        <button onClick={onItemClick} className="flex items-center gap-2 text-slate-700 hover:text-emerald-600 w-full">
+        <button onClick={onItemClick} className="flex items-center gap-2 text-slate-700 hover:text-emerald-600 w-full transition-colors">
           <HeadphonesIcon size={16} />
           <span className="text-xs font-bold">Contact Admin</span>
         </button>
