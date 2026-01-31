@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { LayoutDashboard, CreditCard, Megaphone, Calendar, FileText, User, HeadphonesIcon, ShieldCheck, Settings } from 'lucide-react';
 
-// Define the props once
 interface SidebarProps {
   onItemClick?: () => void;
 }
@@ -28,7 +27,6 @@ export default function Sidebar({ onItemClick }: SidebarProps) {
   ];
 
   return (
-    // Set to full width/height so the Layout container can control the size
     <aside className="w-full h-full bg-white border-r border-slate-100 flex flex-col p-6 overflow-y-auto">
       <div className="flex items-center gap-3 mb-10 px-2">
         <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center text-white font-bold">H</div>
@@ -45,7 +43,7 @@ export default function Sidebar({ onItemClick }: SidebarProps) {
             <Link 
               key={item.href} 
               href={item.href}
-              onClick={onItemClick} // Triggers the menu to close on mobile
+              onClick={onItemClick} // Critical for mobile auto-close
               className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
                 isActive ? 'bg-emerald-50 text-emerald-600 font-bold' : 'text-slate-500 hover:bg-slate-50'
               }`}
@@ -66,7 +64,7 @@ export default function Sidebar({ onItemClick }: SidebarProps) {
               <Link 
                 key={item.href} 
                 href={item.href}
-                onClick={onItemClick} // Triggers the menu to close on mobile
+                onClick={onItemClick} // Added to Admin Tools to fix the "covering" issue
                 className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
                   pathname === item.href ? 'bg-slate-800 text-white font-bold' : 'text-slate-500 hover:bg-slate-50'
                 }`}
@@ -80,7 +78,10 @@ export default function Sidebar({ onItemClick }: SidebarProps) {
       </nav>
 
       <div className="mt-auto bg-slate-50 p-4 rounded-2xl">
-        <button className="flex items-center gap-2 text-slate-700 hover:text-emerald-600 w-full">
+        <button 
+          onClick={onItemClick} // Closes menu if they click support too
+          className="flex items-center gap-2 text-slate-700 hover:text-emerald-600 w-full"
+        >
           <HeadphonesIcon size={16} />
           <span className="text-xs font-bold">Contact Admin</span>
         </button>
